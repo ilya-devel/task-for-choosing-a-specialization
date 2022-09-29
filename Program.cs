@@ -6,32 +6,39 @@ namespace Program
     {
         static void Main()
         {
-
+            Console.WriteLine("--Данная программа запрашивает массив строковых элементов--\n");
+            Console.WriteLine("Заполните массив\n");
+            string[] arr = GetNewArr();
+            Console.WriteLine("Создан массив:");
+            ShowArr(arr);
+            Console.WriteLine();
+            int choiceLen = GetLengthElements();
+            Console.WriteLine();
+            Console.WriteLine("Ниже указан результат выборки");
+            string[] newArr = ChoiceValuesInArr(arr, choiceLen);
+            ShowArr(newArr);
         }
         static string[] GrowArr(string[] oldArr)
         {
-            int size = oldArr.Length + 10;
+            int size = oldArr.Length + 1;
             string[] newArr = new string[size];
             for (int i = 0; i < oldArr.Length; i++) newArr[i]=oldArr[i];
             return newArr;
         }
         static string[] GetNewArr()
         {
-            string[] arr = new string[10];
+            string[] arr = new string[1];
             int ind = 0;
             while (true)
             {
                 Console.WriteLine("Введите значение для добавления в список, для прекращения нажмите Enter: ");
-                string tmpText = Convert.ToString(Console.ReadLine())!;
+                string tmpText = Console.ReadLine()!;
                 if (tmpText == string.Empty) break;
                 else
                 {
                     if (ind == arr.Length) arr = GrowArr(arr);
-                    else
-                    {
-                        arr[ind] = tmpText;
-                        ind++;
-                    }
+                    arr[ind] = tmpText;
+                    ind++;
                 }
             }
             return arr;
@@ -40,9 +47,31 @@ namespace Program
         {
             for (int i = 0; i < arr.Length; i++)
             {
-                if (i != arr.Length-1) Console.Write($"{arr[i]} -> ");
+                if (i < arr.Length-1) Console.Write($"{arr[i]} -> ");
                 else Console.Write($"{arr[i]}\n");
             }
+        }
+        static string[] ChoiceValuesInArr(string[] arr, int choiceLength)
+        {
+            string[] newArr = new string[1];
+            int ind = 0;
+            for (int i = 0 ; i < arr.Length; i++)
+            {
+                if (arr[i].Length <= choiceLength)
+                {
+                    if (ind == newArr.Length) newArr = GrowArr(newArr); 
+                    newArr[ind] = arr[i];
+                    ind++;
+                }
+            }
+            return newArr;
+        }
+        static int GetLengthElements()
+        {
+            Console.WriteLine("Введите длину элементов для выборки (по умолчанию: 3): ");
+            bool checking = int.TryParse(Console.ReadLine(), out int size);
+            if (!checking) size = 3;
+            return size;
         }
     }
 }
