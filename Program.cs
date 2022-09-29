@@ -27,7 +27,7 @@ namespace Program
         }
         static string[] GetNewArr()
         {
-            string[] arr = new string[1];
+            string[] arr = new string[] {string.Empty};
             int ind = 0;
             while (true)
             {
@@ -53,11 +53,11 @@ namespace Program
         }
         static string[] ChoiceValuesInArr(string[] arr, int choiceLength)
         {
-            string[] newArr = new string[1];
+            string[] newArr = new string[] {"В массиве нет подходящих значений"};
             int ind = 0;
             for (int i = 0 ; i < arr.Length; i++)
             {
-                if (arr[i].Length <= choiceLength)
+                if (arr[i] != string.Empty && arr[i].Length <= choiceLength)
                 {
                     if (ind == newArr.Length) newArr = GrowArr(newArr); 
                     newArr[ind] = arr[i];
